@@ -1,7 +1,12 @@
 import 'src/native.dart';
 
 void main(List<String> arguments) {
-  final graphical = Graphical();
-  final path = graphical.cornerPath(100, 100, 8);
-  print(path);
+  print([
+    Graphical.cornerPath(100, 100, 8),
+    Graphical.radians90,
+    Graphical.radians180,
+    Graphical.radians270,
+    Graphical.radians360,
+    Graphical.pi,
+  ].join('\n'));
 }
