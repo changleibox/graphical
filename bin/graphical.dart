@@ -8,5 +8,8 @@ void main(List<String> arguments) {
     Graphical.radians270,
     Graphical.radians360,
     Graphical.pi,
+    // Graphical.fromRadians(1, 8),
+    Graphical.fromSize(80, 8, 4, false),
+    Graphical.fromRadians(1, 4),
   ].join('\n'));
 }
