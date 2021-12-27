@@ -56,7 +56,7 @@ class CGOffset extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGOffset{dx: $dx, dy: $dy}';
+    return 'CGOffset{dx: ${dx.toStringAsFixed(2)}, dy: ${dy.toStringAsFixed(2)}}';
   }
 }
 
@@ -86,7 +86,7 @@ class CGSize extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGSize{width: $width, height: $height}';
+    return 'CGSize{width: ${width.toStringAsFixed(2)}, height: ${height.toStringAsFixed(2)}}';
   }
 }
 
@@ -127,11 +127,23 @@ class CGRect extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGRect{left: $left, top: $top, right: $right, bottom: $bottom}';
+    return 'CGRect{left: ${left.toStringAsFixed(2)}, top: ${top.toStringAsFixed(2)}, right: ${right.toStringAsFixed(2)}, bottom: ${bottom.toStringAsFixed(2)}}';
   }
 }
 
 class CGIncircle extends ffi.Struct {
+  factory CGIncircle(CGOffset begin, CGOffset middle, CGOffset end, CGOffset center) {
+    return calloc<CGIncircle>().ref
+      ..begin = begin
+      ..middle = middle
+      ..end = end
+      ..center = center;
+  }
+
+  factory CGIncircle.fromPointer(ffi.Pointer<CGIncircle> pointer) {
+    return pointer.ref;
+  }
+
   external CGOffset begin;
   external CGOffset middle;
   external CGOffset end;
