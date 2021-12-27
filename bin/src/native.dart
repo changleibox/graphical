@@ -28,7 +28,10 @@ typedef FromRadians = CGIncircle Function(double radians, double radius);
 typedef CGFromSize = CGIncircle Function(ffi.Double width, ffi.Double height, ffi.Double radius, ffi.Bool avoidOffset);
 typedef FromSize = CGIncircle Function(double width, double height, double radius, bool avoidOffset);
 
-final graphical = dlopenPlatformSpecific('/Users/changlei/CLionProjects/graphical/lib/libgraphical.dylib');
+final graphical = dlopenPlatformSpecific(
+  'graphical',
+  path: '/Users/changlei/CLionProjects/graphical/lib/',
+);
 
 class CGOffset extends ffi.Struct {
   factory CGOffset(double dx, double dy) {
