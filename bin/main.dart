@@ -1,5 +1,5 @@
+import 'src/graphical.dart';
 import 'src/incircle.dart';
-import 'src/native.dart';
 
 void main(List<String> arguments) {
   print([
