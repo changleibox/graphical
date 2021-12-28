@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
 
-import 'package:ffi/ffi.dart';
-
 import 'ffi.dart';
 
 typedef CGCornerPath = Pointer<Int8> Function(
@@ -54,8 +52,7 @@ class Graphical {
       brRadius ?? radius,
       avoidOffset,
     );
-    final jsonStr = result.cast<Utf8>().toDartString();
-    return json.decode(jsonStr) as Map<String, dynamic>;
+    return json.decode(result.string) as Map<String, dynamic>;
   }
 
   static double _radians(String symbolName) {

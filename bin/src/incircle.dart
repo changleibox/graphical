@@ -12,8 +12,8 @@ typedef CGIncircleFromSize = CGIncircle Function(Double width, Double height, Do
 typedef IncircleFromSize = CGIncircle Function(double width, double height, double radius, bool avoidOffset);
 typedef CGIncircleShift = CGIncircle Function(CGIncircle incircle, Double dx, Double dy);
 typedef IncircleShift = CGIncircle Function(CGIncircle incircle, double dx, double dy);
-typedef CGIncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
-typedef IncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
+typedef CGIncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
+typedef IncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
 
 /// Created by changlei on 2021/12/28.
 ///
@@ -66,10 +66,7 @@ class CGIncircle extends Struct {
   }
 
   String toJson() {
-    return graphical
-        .lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(this)
-        .cast<Utf8>()
-        .toDartString();
+    return graphical.lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(this).string;
   }
 
   @override

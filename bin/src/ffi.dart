@@ -1,6 +1,7 @@
 import 'dart:ffi';
-import 'dart:io' show Platform;
+import 'dart:io';
 
+import 'package:ffi/ffi.dart';
 import 'package:path/path.dart';
 
 /// Created by changlei on 2021/12/27.
@@ -26,3 +27,7 @@ final graphical = dlopenPlatformSpecific(
   'graphical',
   path: '/Users/changlei/CLionProjects/graphical/lib/',
 );
+
+extension CString on Pointer<Int8> {
+  String get string => cast<Utf8>().toDartString();
+}
