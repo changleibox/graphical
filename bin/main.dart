@@ -11,7 +11,7 @@ void main(List<String> arguments) {
     Graphical.radians270,
     Graphical.radians360,
     Graphical.pi,
-    CGIncircle.fromSize(CGSize.square(80), 4.0).shift(CGOffset.init(10, 10)).toJson(),
-    CGIncircle.fromRadians(1.0, 4.0).shift(CGOffset.init(10, 10)).toJson(),
+    CGIncircle.fromSize(CGSize.square(80), 4.0).shift(CGOffset.init(10, 10)),
+    CGIncircle.fromRadians(1.0, 4.0).shift(CGOffset.init(10, 10)),
   ].join('\n'));
 }
