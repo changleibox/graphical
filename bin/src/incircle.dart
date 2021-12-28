@@ -17,8 +17,6 @@ typedef CGIncircleRotation = CGIncircle Function(CGIncircle incircle, Double rad
 typedef IncircleRotation = CGIncircle Function(CGIncircle incircle, double radians);
 typedef CGIncircleFlipped = CGIncircle Function(CGIncircle incircle);
 typedef IncircleFlipped = CGIncircle Function(CGIncircle incircle);
-typedef CGIncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
-typedef IncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
 typedef CGIncircleCorrectRadians = Double Function(Double radians);
 typedef IncircleCorrectRadians = double Function(double radians);
 typedef CGIncircleOffsetOf = Double Function(CGSize size, Double radians);
@@ -103,10 +101,6 @@ class CGIncircle extends Struct {
 
   static CGOffset centerOf(CGOffset point1, CGOffset point2, CGOffset point3) {
     return graphical.lookupFunction<CGIncircleCenterOf, IncircleCenterOf>('Incircle_centerOf')(point1, point2, point3);
-  }
-
-  String toJson() {
-    return graphical.lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(this).string;
   }
 
   @override
