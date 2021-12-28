@@ -32,6 +32,8 @@ class CGOffset extends Struct {
   @Double()
   external double distance;
   @Double()
+  external double distanceSquared;
+  @Double()
   external double direction;
 
   @override
@@ -42,14 +44,14 @@ class CGOffset extends Struct {
           dx == other.dx &&
           dy == other.dy &&
           distance == other.distance &&
+          distanceSquared == other.distanceSquared &&
           direction == other.direction;
 
   @override
-  int get hashCode => dx.hashCode ^ dy.hashCode ^ distance.hashCode ^ direction.hashCode;
+  int get hashCode => dx.hashCode ^ dy.hashCode ^ distance.hashCode ^ distanceSquared.hashCode ^ direction.hashCode;
 
   @override
   String toString() {
-    return 'CGOffset{dx: ${dx.toStringAsFixed(4)}, dy: ${dy.toStringAsFixed(4)}, '
-        'distance: ${distance.toStringAsFixed(4)}, direction: ${direction.toStringAsFixed(4)}}';
+    return 'CGOffset{dx: $dx, dy: $dy, distance: $distance, distanceSquared: $distanceSquared, direction: $direction}';
   }
 }
