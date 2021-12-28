@@ -1,19 +1,19 @@
 import 'dart:convert';
-import 'dart:ffi' as ffi;
+import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
 import 'ffi.dart';
 
-typedef CGCornerPath = ffi.Pointer<ffi.Int8> Function(
-  ffi.Double width,
-  ffi.Double height,
-  ffi.Double radius,
-  ffi.Double blRadius,
-  ffi.Double brRadius,
-  ffi.Bool avoidOffset,
+typedef CGCornerPath = Pointer<Int8> Function(
+  Double width,
+  Double height,
+  Double radius,
+  Double blRadius,
+  Double brRadius,
+  Bool avoidOffset,
 );
-typedef CornerPath = ffi.Pointer<ffi.Int8> Function(
+typedef CornerPath = Pointer<Int8> Function(
   double width,
   double height,
   double radius,
@@ -21,36 +21,40 @@ typedef CornerPath = ffi.Pointer<ffi.Int8> Function(
   double brRadius,
   bool avoidOffset,
 );
-typedef CGRadians = ffi.Double Function();
+typedef CGRadians = Double Function();
 typedef Radians = double Function();
-typedef CGFromRadians = CGIncircle Function(ffi.Double radians, ffi.Double radius);
-typedef FromRadians = CGIncircle Function(double radians, double radius);
-typedef CGFromSize = CGIncircle Function(ffi.Double width, ffi.Double height, ffi.Double radius, ffi.Bool avoidOffset);
-typedef FromSize = CGIncircle Function(double width, double height, double radius, bool avoidOffset);
+typedef CGIncircleFromRadians = CGIncircle Function(Double radians, Double radius);
+typedef IncircleFromRadians = CGIncircle Function(double radians, double radius);
+typedef CGIncircleFromSize = CGIncircle Function(Double width, Double height, Double radius, Bool avoidOffset);
+typedef IncircleFromSize = CGIncircle Function(double width, double height, double radius, bool avoidOffset);
+typedef CGIncircleShift = CGIncircle Function(CGIncircle incircle, Double dx, Double dy);
+typedef IncircleShift = CGIncircle Function(CGIncircle incircle, double dx, double dy);
+typedef CGIncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
+typedef IncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
 
 final graphical = dlopenPlatformSpecific(
   'graphical',
   path: '/Users/changlei/CLionProjects/graphical/lib/',
 );
 
-class CGOffset extends ffi.Struct {
+class CGOffset extends Struct {
   factory CGOffset(double dx, double dy) {
     return calloc<CGOffset>().ref
       ..dx = dx
       ..dy = dy;
   }
 
-  factory CGOffset.fromPointer(ffi.Pointer<CGOffset> pointer) {
+  factory CGOffset.fromPointer(Pointer<CGOffset> pointer) {
     return pointer.ref;
   }
 
-  @ffi.Double()
+  @Double()
   external double dx;
-  @ffi.Double()
+  @Double()
   external double dy;
-  @ffi.Double()
+  @Double()
   external double distance;
-  @ffi.Double()
+  @Double()
   external double direction;
 
   @override
@@ -68,32 +72,33 @@ class CGOffset extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGOffset{dx: ${dx.toStringAsFixed(4)}, dy: ${dy.toStringAsFixed(4)}, distance: ${distance.toStringAsFixed(4)}, direction: ${direction.toStringAsFixed(4)}}';
+    return 'CGOffset{dx: ${dx.toStringAsFixed(4)}, dy: ${dy.toStringAsFixed(4)}, '
+        'distance: ${distance.toStringAsFixed(4)}, direction: ${direction.toStringAsFixed(4)}}';
   }
 }
 
-class CGSize extends ffi.Struct {
+class CGSize extends Struct {
   factory CGSize(double width, double height) {
     return calloc<CGSize>().ref
       ..width = width
       ..height = height;
   }
 
-  factory CGSize.fromPointer(ffi.Pointer<CGSize> pointer) {
+  factory CGSize.fromPointer(Pointer<CGSize> pointer) {
     return pointer.ref;
   }
 
-  @ffi.Double()
+  @Double()
   external double width;
-  @ffi.Double()
+  @Double()
   external double height;
-  @ffi.Double()
+  @Double()
   external double direction;
-  @ffi.Double()
+  @Double()
   external double radians;
-  @ffi.Double()
+  @Double()
   external double distance;
-  @ffi.Double()
+  @Double()
   external double semiRadians;
 
   @override
@@ -119,11 +124,13 @@ class CGSize extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGSize{width: ${width.toStringAsFixed(4)}, height: ${height.toStringAsFixed(4)}, direction: ${direction.toStringAsFixed(4)}, radians: ${radians.toStringAsFixed(4)}, distance: ${distance.toStringAsFixed(4)}, semiRadians: ${semiRadians.toStringAsFixed(4)}}';
+    return 'CGSize{width: ${width.toStringAsFixed(4)}, height: ${height.toStringAsFixed(4)}, '
+        'direction: ${direction.toStringAsFixed(4)}, radians: ${radians.toStringAsFixed(4)}, '
+        'distance: ${distance.toStringAsFixed(4)}, semiRadians: ${semiRadians.toStringAsFixed(4)}}';
   }
 }
 
-class CGRect extends ffi.Struct {
+class CGRect extends Struct {
   factory CGRect(double left, double top, double right, double bottom) {
     return calloc<CGRect>().ref
       ..left = left
@@ -132,17 +139,17 @@ class CGRect extends ffi.Struct {
       ..bottom = bottom;
   }
 
-  factory CGRect.fromPointer(ffi.Pointer<CGRect> pointer) {
+  factory CGRect.fromPointer(Pointer<CGRect> pointer) {
     return pointer.ref;
   }
 
-  @ffi.Double()
+  @Double()
   external double left;
-  @ffi.Double()
+  @Double()
   external double top;
-  @ffi.Double()
+  @Double()
   external double right;
-  @ffi.Double()
+  @Double()
   external double bottom;
   external CGSize size;
 
@@ -162,11 +169,12 @@ class CGRect extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGRect{left: ${left.toStringAsFixed(4)}, top: ${top.toStringAsFixed(4)}, right: ${right.toStringAsFixed(4)}, bottom: ${bottom.toStringAsFixed(4)}, size: $size}';
+    return 'CGRect{left: ${left.toStringAsFixed(4)}, top: ${top.toStringAsFixed(4)}, '
+        'right: ${right.toStringAsFixed(4)}, bottom: ${bottom.toStringAsFixed(4)}, size: $size}';
   }
 }
 
-class CGIncircle extends ffi.Struct {
+class CGIncircle extends Struct {
   factory CGIncircle(CGOffset begin, CGOffset middle, CGOffset end, CGOffset center) {
     return calloc<CGIncircle>().ref
       ..begin = begin
@@ -175,7 +183,7 @@ class CGIncircle extends ffi.Struct {
       ..center = center;
   }
 
-  factory CGIncircle.fromPointer(ffi.Pointer<CGIncircle> pointer) {
+  factory CGIncircle.fromPointer(Pointer<CGIncircle> pointer) {
     return pointer.ref;
   }
 
@@ -183,15 +191,23 @@ class CGIncircle extends ffi.Struct {
   external CGOffset middle;
   external CGOffset end;
   external CGOffset center;
-  @ffi.Double()
+  @Double()
   external double radius;
-  @ffi.Double()
+  @Double()
   external double radians;
-  @ffi.Double()
+  @Double()
   external double rotation;
   external CGOffset vertex;
   external CGRect circle;
   external CGRect bounds;
+
+  CGIncircle shift(double dx, double dy) {
+    return Graphical.shift(this, dx, dy);
+  }
+
+  String toJson() {
+    return Graphical.toJson(this);
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -224,7 +240,9 @@ class CGIncircle extends ffi.Struct {
 
   @override
   String toString() {
-    return 'CGIncircle{begin: $begin, middle: $middle, end: $end, center: $center, radius: $radius, radians: $radians, rotation: $rotation, vertex: $vertex, circle: $circle, bounds: $bounds}';
+    return 'CGIncircle{begin: $begin, middle: $middle, end: $end, center: $center, '
+        'radius: ${radius.toStringAsFixed(4)}, radians: ${radians.toStringAsFixed(4)}, '
+        'rotation: ${rotation.toStringAsFixed(4)}, vertex: $vertex, circle: $circle, bounds: $bounds}';
   }
 }
 
@@ -267,10 +285,29 @@ class Graphical {
   }
 
   static CGIncircle fromRadians(double radians, double radius) {
-    return graphical.lookupFunction<CGFromRadians, FromRadians>('fromRadians')(radians, radius);
+    return graphical.lookupFunction<CGIncircleFromRadians, IncircleFromRadians>('Incircle_fromRadians')(
+      radians,
+      radius,
+    );
   }
 
   static CGIncircle fromSize(double width, double height, double radius, bool avoidOffset) {
-    return graphical.lookupFunction<CGFromSize, FromSize>('fromSize')(width, height, radius, avoidOffset);
+    return graphical.lookupFunction<CGIncircleFromSize, IncircleFromSize>('Incircle_fromSize')(
+      width,
+      height,
+      radius,
+      avoidOffset,
+    );
+  }
+
+  static CGIncircle shift(CGIncircle incircle, double dx, double dy) {
+    return graphical.lookupFunction<CGIncircleShift, IncircleShift>('Incircle_shift')(incircle, dx, dy);
+  }
+
+  static String toJson(CGIncircle incircle) {
+    return graphical
+        .lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(incircle)
+        .cast<Utf8>()
+        .toDartString();
   }
 }

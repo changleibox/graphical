@@ -8,7 +8,7 @@ void main(List<String> arguments) {
     Graphical.radians270,
     Graphical.radians360,
     Graphical.pi,
-    Graphical.fromSize(80.0, 80.0, 4.0, false),
-    Graphical.fromRadians(1.0, 4.0),
+    Graphical.fromSize(80.0, 80.0, 4.0, false).shift(10, 10).toJson(),
+    Graphical.fromRadians(1.0, 4.0).shift(10, 10).toJson(),
   ].join('\n'));
 }
