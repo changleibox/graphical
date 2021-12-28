@@ -6,6 +6,10 @@ import 'ffi.dart';
 
 typedef CGOffsetInit = CGOffset Function(Double dx, Double dy);
 typedef OffsetInit = CGOffset Function(double dx, double dy);
+typedef CGOffsetFromDirection = CGOffset Function(Double direction, Double distance);
+typedef OffsetFromDirection = CGOffset Function(double direction, double distance);
+typedef CGOffsetRotation = CGOffset Function(CGOffset offset, Double radius);
+typedef OffsetRotation = CGOffset Function(CGOffset offset, double radius);
 
 /// Created by changlei on 2021/12/28.
 ///
@@ -25,6 +29,13 @@ class CGOffset extends Struct {
     return graphical.lookupFunction<CGOffsetInit, OffsetInit>('Offset_init')(dx, dy);
   }
 
+  static CGOffset fromDirection(double direction, {double distance = 1}) {
+    return graphical.lookupFunction<CGOffsetFromDirection, OffsetFromDirection>('Offset_fromDirection')(
+      direction,
+      distance,
+    );
+  }
+
   @Double()
   external double dx;
   @Double()
@@ -35,6 +46,18 @@ class CGOffset extends Struct {
   external double distanceSquared;
   @Double()
   external double direction;
+
+  CGOffset rotationX(double radius) {
+    return graphical.lookupFunction<CGOffsetRotation, OffsetRotation>('Offset_rotationX')(this, radius);
+  }
+
+  CGOffset rotationY(double radius) {
+    return graphical.lookupFunction<CGOffsetRotation, OffsetRotation>('Offset_rotationY')(this, radius);
+  }
+
+  CGOffset rotationZ(double radius) {
+    return graphical.lookupFunction<CGOffsetRotation, OffsetRotation>('Offset_rotationZ')(this, radius);
+  }
 
   @override
   bool operator ==(Object other) =>
