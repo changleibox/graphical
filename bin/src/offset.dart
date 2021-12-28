@@ -62,19 +62,13 @@ class CGOffset extends Struct {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CGOffset &&
-          runtimeType == other.runtimeType &&
-          dx == other.dx &&
-          dy == other.dy &&
-          distance == other.distance &&
-          distanceSquared == other.distanceSquared &&
-          direction == other.direction;
+      other is CGOffset && runtimeType == other.runtimeType && dx == other.dx && dy == other.dy;
 
   @override
-  int get hashCode => dx.hashCode ^ dy.hashCode ^ distance.hashCode ^ distanceSquared.hashCode ^ direction.hashCode;
+  int get hashCode => dx.hashCode ^ dy.hashCode;
 
   @override
   String toString() {
-    return 'CGOffset{dx: $dx, dy: $dy, distance: $distance, distanceSquared: $distanceSquared, direction: $direction}';
+    return 'CGOffset{dx: $dx, dy: $dy}';
   }
 }

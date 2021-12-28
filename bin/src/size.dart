@@ -132,28 +132,13 @@ class CGSize extends Struct {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CGSize &&
-          runtimeType == other.runtimeType &&
-          width == other.width &&
-          height == other.height &&
-          direction == other.direction &&
-          radians == other.radians &&
-          distance == other.distance &&
-          semiRadians == other.semiRadians;
+      other is CGSize && runtimeType == other.runtimeType && width == other.width && height == other.height;
 
   @override
-  int get hashCode =>
-      width.hashCode ^
-      height.hashCode ^
-      direction.hashCode ^
-      radians.hashCode ^
-      distance.hashCode ^
-      semiRadians.hashCode;
+  int get hashCode => width.hashCode ^ height.hashCode;
 
   @override
   String toString() {
-    return 'CGSize{width: ${width.toStringAsFixed(4)}, height: ${height.toStringAsFixed(4)}, '
-        'direction: ${direction.toStringAsFixed(4)}, radians: ${radians.toStringAsFixed(4)}, '
-        'distance: ${distance.toStringAsFixed(4)}, semiRadians: ${semiRadians.toStringAsFixed(4)}}';
+    return 'CGSize{width: $width, height: $height}';
   }
 }

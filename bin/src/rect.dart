@@ -136,15 +136,13 @@ class CGRect extends Struct {
           left == other.left &&
           top == other.top &&
           right == other.right &&
-          bottom == other.bottom &&
-          size == other.size;
+          bottom == other.bottom;
 
   @override
-  int get hashCode => left.hashCode ^ top.hashCode ^ right.hashCode ^ bottom.hashCode ^ size.hashCode;
+  int get hashCode => left.hashCode ^ top.hashCode ^ right.hashCode ^ bottom.hashCode;
 
   @override
   String toString() {
-    return 'CGRect{left: ${left.toStringAsFixed(4)}, top: ${top.toStringAsFixed(4)}, '
-        'right: ${right.toStringAsFixed(4)}, bottom: ${bottom.toStringAsFixed(4)}, size: $size}';
+    return 'CGRect{left: $left, top: $top, right: $right, bottom: $bottom}';
   }
 }

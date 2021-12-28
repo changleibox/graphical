@@ -110,32 +110,13 @@ class CGIncircle extends Struct {
           runtimeType == other.runtimeType &&
           begin == other.begin &&
           middle == other.middle &&
-          end == other.end &&
-          center == other.center &&
-          radius == other.radius &&
-          radians == other.radians &&
-          rotation == other.rotation &&
-          vertex == other.vertex &&
-          circle == other.circle &&
-          bounds == other.bounds;
+          end == other.end;
 
   @override
-  int get hashCode =>
-      begin.hashCode ^
-      middle.hashCode ^
-      end.hashCode ^
-      center.hashCode ^
-      radius.hashCode ^
-      radians.hashCode ^
-      rotation.hashCode ^
-      vertex.hashCode ^
-      circle.hashCode ^
-      bounds.hashCode;
+  int get hashCode => begin.hashCode ^ middle.hashCode ^ end.hashCode;
 
   @override
   String toString() {
-    return 'CGIncircle{begin: $begin, middle: $middle, end: $end, center: $center, '
-        'radius: ${radius.toStringAsFixed(4)}, radians: ${radians.toStringAsFixed(4)}, '
-        'rotation: ${rotation.toStringAsFixed(4)}, vertex: $vertex, circle: $circle, bounds: $bounds}';
+    return 'CGIncircle{begin: $begin, middle: $middle, end: $end}';
   }
 }
