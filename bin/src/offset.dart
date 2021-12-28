@@ -2,6 +2,11 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
+import 'ffi.dart';
+
+typedef CGOffsetInit = CGOffset Function(Double dx, Double dy);
+typedef OffsetInit = CGOffset Function(double dx, double dy);
+
 /// Created by changlei on 2021/12/28.
 ///
 /// Offset
@@ -14,6 +19,10 @@ class CGOffset extends Struct {
 
   factory CGOffset.fromPointer(Pointer<CGOffset> pointer) {
     return pointer.ref;
+  }
+
+  static CGOffset init(double dx, double dy) {
+    return graphical.lookupFunction<CGOffsetInit, OffsetInit>('Offset_init')(dx, dy);
   }
 
   @Double()

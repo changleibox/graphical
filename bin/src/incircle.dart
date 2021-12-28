@@ -5,15 +5,26 @@ import 'package:ffi/ffi.dart';
 import 'ffi.dart';
 import 'offset.dart';
 import 'rect.dart';
+import 'size.dart';
 
 typedef CGIncircleFromRadians = CGIncircle Function(Double radians, Double radius);
 typedef IncircleFromRadians = CGIncircle Function(double radians, double radius);
-typedef CGIncircleFromSize = CGIncircle Function(Double width, Double height, Double radius, Bool avoidOffset);
-typedef IncircleFromSize = CGIncircle Function(double width, double height, double radius, bool avoidOffset);
-typedef CGIncircleShift = CGIncircle Function(CGIncircle incircle, Double dx, Double dy);
-typedef IncircleShift = CGIncircle Function(CGIncircle incircle, double dx, double dy);
+typedef CGIncircleFromSize = CGIncircle Function(CGSize size, Double radius, Bool avoidOffset);
+typedef IncircleFromSize = CGIncircle Function(CGSize size, double radius, bool avoidOffset);
+typedef CGIncircleShift = CGIncircle Function(CGIncircle incircle, CGOffset offset);
+typedef IncircleShift = CGIncircle Function(CGIncircle incircle, CGOffset offset);
+typedef CGIncircleRotation = CGIncircle Function(CGIncircle incircle, Double radians);
+typedef IncircleRotation = CGIncircle Function(CGIncircle incircle, double radians);
+typedef CGIncircleFlipped = CGIncircle Function(CGIncircle incircle);
+typedef IncircleFlipped = CGIncircle Function(CGIncircle incircle);
 typedef CGIncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
 typedef IncircleToJson = Pointer<Int8> Function(CGIncircle incircle);
+typedef CGIncircleCorrectRadians = Double Function(Double radians);
+typedef IncircleCorrectRadians = double Function(double radians);
+typedef CGIncircleOffsetOf = Double Function(CGSize size, Double radians);
+typedef IncircleOffsetOf = double Function(CGSize size, double radians);
+typedef CGIncircleCenterOf = CGOffset Function(CGOffset point1, CGOffset point2, CGOffset point3);
+typedef IncircleCenterOf = CGOffset Function(CGOffset point1, CGOffset point2, CGOffset point3);
 
 /// Created by changlei on 2021/12/28.
 ///
@@ -38,10 +49,9 @@ class CGIncircle extends Struct {
     );
   }
 
-  static CGIncircle fromSize(double width, double height, double radius, {bool avoidOffset = false}) {
+  static CGIncircle fromSize(CGSize size, double radius, {bool avoidOffset = false}) {
     return graphical.lookupFunction<CGIncircleFromSize, IncircleFromSize>('Incircle_fromSize')(
-      width,
-      height,
+      size,
       radius,
       avoidOffset,
     );
@@ -61,8 +71,38 @@ class CGIncircle extends Struct {
   external CGRect circle;
   external CGRect bounds;
 
-  CGIncircle shift(double dx, double dy) {
-    return graphical.lookupFunction<CGIncircleShift, IncircleShift>('Incircle_shift')(this, dx, dy);
+  CGIncircle shift(CGOffset offset) {
+    return graphical.lookupFunction<CGIncircleShift, IncircleShift>('Incircle_shift')(this, offset);
+  }
+
+  CGIncircle rotationX(double radians) {
+    return graphical.lookupFunction<CGIncircleRotation, IncircleRotation>('Incircle_rotationX')(this, radians);
+  }
+
+  CGIncircle rotationY(double radians) {
+    return graphical.lookupFunction<CGIncircleRotation, IncircleRotation>('Incircle_rotationY')(this, radians);
+  }
+
+  CGIncircle rotationZ(double radians) {
+    return graphical.lookupFunction<CGIncircleRotation, IncircleRotation>('Incircle_rotationZ')(this, radians);
+  }
+
+  CGIncircle get flipped {
+    return graphical.lookupFunction<CGIncircleFlipped, IncircleFlipped>('Incircle_flipped')(this);
+  }
+
+  static double correctRadians(double radians) {
+    return graphical.lookupFunction<CGIncircleCorrectRadians, IncircleCorrectRadians>('Incircle_correctRadians')(
+      radians,
+    );
+  }
+
+  static double offsetOf(CGSize size, double radians) {
+    return graphical.lookupFunction<CGIncircleOffsetOf, IncircleOffsetOf>('Incircle_offsetOf')(size, radians);
+  }
+
+  static CGOffset centerOf(CGOffset point1, CGOffset point2, CGOffset point3) {
+    return graphical.lookupFunction<CGIncircleCenterOf, IncircleCenterOf>('Incircle_centerOf')(point1, point2, point3);
   }
 
   String toJson() {

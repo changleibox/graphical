@@ -1,5 +1,7 @@
 import 'src/graphical.dart';
 import 'src/incircle.dart';
+import 'src/offset.dart';
+import 'src/size.dart';
 
 void main(List<String> arguments) {
   print([
@@ -9,7 +11,7 @@ void main(List<String> arguments) {
     Graphical.radians270,
     Graphical.radians360,
     Graphical.pi,
-    CGIncircle.fromSize(80.0, 80.0, 4.0).shift(10, 10).toJson(),
-    CGIncircle.fromRadians(1.0, 4.0).shift(10, 10).toJson(),
+    CGIncircle.fromSize(CGSize.square(80), 4.0).shift(CGOffset.init(10, 10)).toJson(),
+    CGIncircle.fromRadians(1.0, 4.0).shift(CGOffset.init(10, 10)).toJson(),
   ].join('\n'));
 }

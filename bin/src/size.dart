@@ -2,6 +2,13 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
+import 'ffi.dart';
+
+typedef CGSizeInit = CGSize Function(Double width, Double height);
+typedef SizeInit = CGSize Function(double width, double height);
+typedef CGSizeSquare = CGSize Function(Double dimension);
+typedef SizeSquare = CGSize Function(double dimension);
+
 /// Created by changlei on 2021/12/28.
 ///
 /// Size
@@ -14,6 +21,14 @@ class CGSize extends Struct {
 
   factory CGSize.fromPointer(Pointer<CGSize> pointer) {
     return pointer.ref;
+  }
+
+  static CGSize init(double width, double height) {
+    return graphical.lookupFunction<CGSizeInit, SizeInit>('Size_init')(width, height);
+  }
+
+  static CGSize square(double dimension) {
+    return graphical.lookupFunction<CGSizeSquare, SizeSquare>('Size_square')(dimension);
   }
 
   @Double()

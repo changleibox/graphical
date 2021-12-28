@@ -2,7 +2,11 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
+import 'ffi.dart';
 import 'size.dart';
+
+typedef CGRectInit = CGRect Function(Double left, Double top, Double right, Double bottom);
+typedef RectInit = CGRect Function(double left, double top, double right, double bottom);
 
 /// Created by changlei on 2021/12/28.
 ///
@@ -18,6 +22,10 @@ class CGRect extends Struct {
 
   factory CGRect.fromPointer(Pointer<CGRect> pointer) {
     return pointer.ref;
+  }
+
+  static CGRect init(double left, double top, double right, double bottom) {
+    return graphical.lookupFunction<CGRectInit, RectInit>('Rect_init')(left, top, right, bottom);
   }
 
   @Double()
