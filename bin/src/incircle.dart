@@ -15,33 +15,6 @@ typedef IncircleShift = CGIncircle Function(CGIncircle incircle, double dx, doub
 typedef CGIncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
 typedef IncircleToJson = Pointer<Uint8> Function(CGIncircle incircle);
 
-CGIncircle _fromRadians(double radians, double radius) {
-  return graphical.lookupFunction<CGIncircleFromRadians, IncircleFromRadians>('Incircle_fromRadians')(
-    radians,
-    radius,
-  );
-}
-
-CGIncircle _fromSize(double width, double height, double radius, bool avoidOffset) {
-  return graphical.lookupFunction<CGIncircleFromSize, IncircleFromSize>('Incircle_fromSize')(
-    width,
-    height,
-    radius,
-    avoidOffset,
-  );
-}
-
-CGIncircle _shift(CGIncircle incircle, double dx, double dy) {
-  return graphical.lookupFunction<CGIncircleShift, IncircleShift>('Incircle_shift')(incircle, dx, dy);
-}
-
-String _toJson(CGIncircle incircle) {
-  return graphical
-      .lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(incircle)
-      .cast<Utf8>()
-      .toDartString();
-}
-
 /// Created by changlei on 2021/12/28.
 ///
 /// Incircle
@@ -59,11 +32,19 @@ class CGIncircle extends Struct {
   }
 
   static CGIncircle fromRadians(double radians, double radius) {
-    return _fromRadians(radians, radius);
+    return graphical.lookupFunction<CGIncircleFromRadians, IncircleFromRadians>('Incircle_fromRadians')(
+      radians,
+      radius,
+    );
   }
 
   static CGIncircle fromSize(double width, double height, double radius, {bool avoidOffset = false}) {
-    return _fromSize(width, height, radius, avoidOffset);
+    return graphical.lookupFunction<CGIncircleFromSize, IncircleFromSize>('Incircle_fromSize')(
+      width,
+      height,
+      radius,
+      avoidOffset,
+    );
   }
 
   external CGOffset begin;
@@ -81,11 +62,14 @@ class CGIncircle extends Struct {
   external CGRect bounds;
 
   CGIncircle shift(double dx, double dy) {
-    return _shift(this, dx, dy);
+    return graphical.lookupFunction<CGIncircleShift, IncircleShift>('Incircle_shift')(this, dx, dy);
   }
 
   String toJson() {
-    return _toJson(this);
+    return graphical
+        .lookupFunction<CGIncircleToJson, IncircleToJson>('Incircle_toJson')(this)
+        .cast<Utf8>()
+        .toDartString();
   }
 
   @override
