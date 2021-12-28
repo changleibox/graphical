@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'dart:ffi';
 
 import 'ffi.dart';
+import 'path.dart';
 
-typedef CGCornerPath = Pointer<Int8> Function(
+typedef CGGraphicalCornerPath = CGPath Function(
   Double width,
   Double height,
   Double radius,
@@ -11,7 +11,7 @@ typedef CGCornerPath = Pointer<Int8> Function(
   Double brRadius,
   Bool avoidOffset,
 );
-typedef CornerPath = Pointer<Int8> Function(
+typedef GraphicalCornerPath = CGPath Function(
   double width,
   double height,
   double radius,
@@ -26,17 +26,17 @@ typedef Radians = double Function();
 class Graphical {
   const Graphical._();
 
-  static final pi = Graphical._radians('pi');
+  static final pi = Graphical._radians('Graphical_pi');
 
-  static final radians180 = Graphical._radians('radians180');
+  static final radians180 = Graphical._radians('Graphical_radians180');
 
-  static final radians90 = Graphical._radians('radians90');
+  static final radians90 = Graphical._radians('Graphical_radians90');
 
-  static final radians270 = Graphical._radians('radians270');
+  static final radians270 = Graphical._radians('Graphical_radians270');
 
-  static final radians360 = Graphical._radians('radians360');
+  static final radians360 = Graphical._radians('Graphical_radians360');
 
-  static Map<String, dynamic> cornerPath(
+  static CGPath cornerPath(
     double width,
     double height,
     double radius, {
@@ -44,7 +44,7 @@ class Graphical {
     double? brRadius,
     bool avoidOffset = false,
   }) {
-    final result = graphical.lookupFunction<CGCornerPath, CornerPath>('cornerPath')(
+    return graphical.lookupFunction<CGGraphicalCornerPath, GraphicalCornerPath>('Graphical_cornerPath')(
       width,
       height,
       radius,
@@ -52,7 +52,6 @@ class Graphical {
       brRadius ?? radius,
       avoidOffset,
     );
-    return json.decode(result.string) as Map<String, dynamic>;
   }
 
   static double _radians(String symbolName) {
